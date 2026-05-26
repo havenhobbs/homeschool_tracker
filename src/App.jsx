@@ -42,15 +42,17 @@ const load = (key, fallback) =>  {
 export default function HomeschoolTracker() {
   const [current_week, set_current_week] = useState(() =>load("current_week", 1));
   const [weeks, set_weeks] = useState(() => load("weeks", {}));
-  const [og_step, set_og_step] = useState(() => load("og_step", 0));
+  const [completed_og_steps, set_completed_og_steps] = useState(() => load("completed_og_steps", 0));
 
   const [notes, set_notes] = useState(() => load("notes", {}));
   const [note_input, set_note_input] = useState("");
   const [tab, set_tab] = useState("planner");
 
+  const [is_reset_hovered, set_is_reset_hovered] = useState(false);
+
   useEffect(() => { save("current_week", current_week); }, [current_week]);
   useEffect(() => { save("weeks", weeks); }, [weeks]);
-  useEffect(() => { save("og_step", og_step); }, [og_step]);
+  useEffect(() => { save("completed_og_steps", completed_og_steps); }, [completed_og_steps]);
   useEffect(() => { save("notes", notes); }, [notes]);
 
   const week = weeks[current_week] || {};
@@ -167,6 +169,26 @@ export default function HomeschoolTracker() {
       fontSize: "14px",
       borderRadius: "4px"
     },
+
+    reset_week_button: {
+      background: "#fff",
+      color: "#f44336",
+      border: "1px solid #f44336",
+      padding: "10px 20px",
+      cursor: "pointer",
+      fontFamily: "Lexend, monospace",
+      fontSize: "14px",
+      borderRadius: "4px",
+      width: "100%",
+      marginBottom: "20px",
+      transition: "background 0.15s ease, color 0.15s ease",
+      
+    },
+
+    reset_week_button_hover: {
+      background: "#f44336",
+      color: "#fff"
+    },
     
     week_label: {
       fontSize: "18px",
@@ -212,12 +234,13 @@ export default function HomeschoolTracker() {
       padding: "10px",
       marginBottom: "5px",
       borderRadius: "4px",
-      background: done ? "#4CAF50" : active ? "#2196F3" : "#eee",
-      border: done ? "1px solid #4CAF50" : active ? "1px solid #2196F3" : "1px solid #ddd",
+      background: done ? "#4CAF50" : "#eee",
+      border: done ? "1px solid #4CAF50" : "1px solid #ddd",
       fontSize: "14px",
       cursor: "pointer",
-      color: done || active ? "#fff" : "#333",
-      fontWeight: active ? "bold" : "normal"
+      transition: "all 0.15s ease",
+      display: "flex",
+      alignItems: "center"
     }), 
 
     note_input: {
@@ -290,7 +313,17 @@ export default function HomeschoolTracker() {
             <ProgressBar value={total_done} max={total_possible} color="#4CAF50" />
             <div style={{ height: 16 }} />
 
-            <button style={S.reset_week_button} onClick={reset_week}>reset week</button>
+            <button
+              onClick={reset_week}
+              onMouseEnter={() => set_is_reset_hovered(true)}
+              onMouseLeave={() => set_is_reset_hovered(false)}
+              style={{
+                ...S.reset_week_button,
+                ...(is_reset_hovered ? S.reset_week_button_hover : {})
+              }}
+            >
+              reset week
+            </button>
 
             {SUBJECTS.map(subject => (
               <SubjectCard
@@ -305,28 +338,36 @@ export default function HomeschoolTracker() {
 
         {tab === "og" && (
           <div style={S.section}>
-            <h2 style={S.section_title}>Orton-Gillingham progress</h2>
+            <h2 style={S.section_title}>Orton-Gillingham Progress</h2>
             <p style={{ fontSize: "14px", color: "#555", marginBottom: "10px" }}>
               click a step to mark it as your current focus - completed steps turn green
             </p>
             <div style={S.og_card}>
               {OG_STEPS.map((step, index) => {
+
+                const isDone = !!completed_og_steps[index];
+
                 return (
                   <div
                     key={index}
-                    style={S.og_step(index === og_step, index < og_step)}
-                    onClick={() => set_og_step(index)}
+                    onClick={() => {
+                      set_completed_og_steps(prev => ({
+                        ...prev,
+                        [index]: !prev[index]
+                      }));
+                    }}                     
+                
+                    style={{
+                      ...S.og_step(false, isDone), 
+                      color: isDone ? "#ffffff" : "#333"
+                    }}
                   >
-                    {index < og_step ? "✓" : index === og_step ? "▶ " : `${index + 1}. `}{step}
+                    {isDone ? " " : ""}{step}
                   </div>
                 );
-                })}
+              })}
             </div>
 
-            <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-              <button style={S.nav_button} onClick={() => set_og_step(s => Math.max(0, s - 1))}>◀ back</button>
-              <button style={{ ...S.nav_button, background: "#4CAF50" }} onClick={() => set_og_step(s => Math.min(OG_STEPS.length - 1, s + 1))}>next step ▶</button>
-          </div>
         </div>
       )}
 
