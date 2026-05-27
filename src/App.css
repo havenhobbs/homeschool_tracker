@@ -26,14 +26,14 @@
   }
 
   .title {
-    font-size: 24px;
+    font-size: 26px;
     margin: 0;
     text-transform: lowercase;
   }
 
   .subtitle {
     color: #ccc;
-    font-size: 14px;
+    font-size: 18px;
     margin: 5px 0 0;
   }
 
@@ -71,7 +71,7 @@
   }
 
   .nav-button {
-    background: #2196F3;
+    background: #444;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -115,7 +115,7 @@
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Lexend', monospace;
-    font-size: 14px;
+    font-size: 16px;
     width: 100%;
     margin-bottom: 20px;
     font-weight: bold;
@@ -146,8 +146,9 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     background: #fff;
+    color: #333;
     font-family: 'Lexend', monospace;
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 10px;
     box-sizing: border-box;
   }
@@ -160,12 +161,13 @@
     cursor: pointer;
     border-radius: 4px;
     font-family: 'Lexend', monospace;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .archive-log-title {
     font-family: 'Lexend', monospace;
     font-size: 18px;
+    margin-top: 10px;
     margin-bottom: 10px;
     color: #333;
     border-bottom: 2px solid #333;
@@ -216,7 +218,7 @@
 
   .archive-note-item {
     padding: 8px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #444;
   }
 
   .archive-note-item:last-child {
@@ -233,6 +235,22 @@
     color: #333;
     font-size: 14px;
     white-space: pre-wrap;
+  }
+
+  .archive-note-delete-button {
+    background: #f44336; 
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .archive-note-delete-button:hover {
+    background: #383332;
+    color: #fff;
   }
 
   .matrix-container {
@@ -289,3 +307,24 @@
     border-radius: 6px;
     padding: 16px;
   }
+
+  .subject-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+  }
+
+  .subject-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  

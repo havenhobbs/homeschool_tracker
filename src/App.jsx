@@ -103,7 +103,7 @@ export default function HomeschoolTracker() {
 
       <header className="header">
         <h1 className="title">homeschool tracker</h1>
-        <div className="subtitle">weekly planner | progress | notes</div>
+        <div className="subtitle">2025 - 2026</div>
       </header>
 
       {/* NAV BAR */}
@@ -174,12 +174,22 @@ export default function HomeschoolTracker() {
             notes={notes}
             current_week={current_week}
             set_current_week={set_current_week}
-            onAddNote={(text) => {
+            on_add_note={(text) => {
               const key = `week${current_week}`;
               set_notes(prev => ({
                 ...prev,
                 [key]: [...(prev[key] || []), { text: text, date: new Date().toLocaleString() }]
               }));
+            }}
+
+            on_delete_note={(weekKey, noteIndex) => {
+              set_notes(prev => {
+                const updatedWeekNotes = (prev[weekKey] || []).filter((_, index) => index !== noteIndex);
+                return {
+                  ...prev,
+                  [weekKey]: updatedWeekNotes
+                };
+              });
             }}
           />
         )}

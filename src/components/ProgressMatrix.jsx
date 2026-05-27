@@ -4,7 +4,7 @@ function ProgressMatrix ({ weeks, current_week, set_current_week , SUBJECTS, DAY
         <div className="matrix-container">
             <div className="matrix-header">
                 <h3 className="matrix-title">progress</h3>
-                <span className="matrix-hint">select box to jum to week</span>
+                <span className="matrix-hint">select box to jump to week</span>
             </div>
 
             <div className="matrix-grid">

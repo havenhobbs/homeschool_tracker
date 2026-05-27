@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-function Notes ({ notes, current_week, set_current_week, onAddNote }) {
+function Notes ({ notes, current_week, set_current_week, on_add_note, on_delete_note }) {
 
     const [note_input, set_note_input] = useState("");
 
     const handleAddNote = () => {
 
         if (!note_input.trim()) return;
-        onAddNote(note_input);
+        on_add_note(note_input);
         set_note_input("");
 
     };
@@ -18,7 +18,7 @@ function Notes ({ notes, current_week, set_current_week, onAddNote }) {
 
             <textarea 
                 className="notes-textarea-input"
-                rows={4}
+                rows={5}
                 placeholder="log observations, wins, struggles, things to revisit later..."
                 value={note_input}
                 onChange={e => set_note_input(e.target.value)}
@@ -33,9 +33,9 @@ function Notes ({ notes, current_week, set_current_week, onAddNote }) {
                     <div className="archive-empty-text">no notes recorded in the archive yet </div>
                 ) : (
                     Object.keys(notes)
-                        .sort((a, b) => parseInt(a.replace("week ", "")) - parseInt(b.replace("week ", "")))
+                        .sort((a, b) => parseInt(a.replace("week", "")) - parseInt(b.replace("week", "")))
                         .map(weekKey => {
-                            const weekNum = weekKey.replace("week ", "");
+                            const weekNum = weekKey.replace("week", "");
                             const weekNotes = notes[weekKey] || [];
 
                             if (weekNotes.length === 0) return null;
@@ -54,10 +54,24 @@ function Notes ({ notes, current_week, set_current_week, onAddNote }) {
                                     
                                     {weekNotes.map((note, index) => (
                                         <div key={index} className="archive-note-item">
+                                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                                             <div className="archive-note-date">{note.date}</div>
                                             <div className="archive-note-text">{note.text}</div>
                                         </div>
-                                     ))}
+
+                                        <button
+                                            onClick={() => {
+                                                if (window.confirm("are you sure you want to delete this note?")) {
+                                                    on_delete_note(weekKey, index);
+                                                }
+                                            }}
+                                            title="delete note"
+                                            className="archive-note-delete-button"
+                                        >
+                                            &times;
+                                        </button>
+                                    </div>
+                                    ))}
                                 </div>
                             );
                         })
