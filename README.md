@@ -10,6 +10,7 @@ a clean, responsive, and distraction-free React appliation built with Vite and V
 * **orton-gillingham checklist:** a non-sequential skill progression matrix that tracks reading/phonics landmarks out of order as your student hits milestones
 * **historical archive notes log:** capture breakthroughs, struggles, and general observations bound to the current week while maintaining a unified, readable historical feed below - includes date and time stamp at time of entry but can move between weeks to add if something was missed
 * **local storage synchronization:** automatically handles background caching for continuous operational memory - no databases required
+* **multi-device file backups:** features clean built-in **JSON Export/Import triggers** allowing you to download local data and instantly sync progress across different devices manually
 
 ---
 
@@ -20,16 +21,16 @@ the repository is modularized to separate your application tracking logic from v
 ```text
 homeschool_tracker/
 ├── src/
-│   ├── App.jsx             # Main router, storage engines, and core data stores
-│   ├── App.css             # Unified application aesthetics layout rules
-│   ├── main.jsx            # React root application bootstrap mounts
+│   ├── App.jsx             # Core application engine, states, and data stores
+│   ├── App.css             # Shorter, clean CSS classes for full-width designs
+│   ├── main.jsx            # React root mount configuration script
 │   └── components/
 │       ├── WeekNav.jsx         # Previous / Next week context nav timeline bars
 │       ├── ProgressMatrix.jsx  # 24-week multi-intensity grid contribution panel
-│       ├── SubjectCard.jsx     # Course action blocks housing day selection buttons
-│       ├── ProgressBar.jsx     # Reusable geometric metric completion visual indicators
-│       ├── Notes.jsx           # Observation logs capturing text feeds and archived sheets
-│       └── OGProgress.jsx      # Non-sequential reading milestones check list matrix
+│       ├── SubjectCard.jsx     # Full-width evenly spaced lesson tracking cards
+│       ├── ProgressBar.jsx     # Reusable geometric metric completion loaders
+│       ├── Notes.jsx           # Observation inputs with built-in delete actions
+│       └── OGProgress.jsx      # Non-sequential reading milestone check sheets
 ```
 
 ---
@@ -52,6 +53,13 @@ npm run dev
 *open your browser and navigate to the address listed in your terminal (typically `http://localhost:xxxx/)*
 
 ---
+
+### data migration (syncing devices)
+because this app relies entirely on native browser storage currently, your tracking information stays with the physical hardwareyou use to check the boxes - to update an external screen: 
+
+1. tap **export backup file** on your current workspace terminal to pull your `.json` data file
+2. transfer or drop that file directly onto your secondary workspace hardware platform
+3. select **import backup file** on the new setup's layout dashboard to seamlessly resume tracking
 
 ## techinical highlights
 
