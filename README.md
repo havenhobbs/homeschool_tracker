@@ -1,4 +1,4 @@
-# homeschooling tracker
+# homeschool tracker
 a clean, responsive, and distraction-free React appliation built with Vite and Vanilla CSS to help parents map out weekly lesson plans, log narrative observations, and visualize instructional momentum over a 52-week timeline
 
 ---
