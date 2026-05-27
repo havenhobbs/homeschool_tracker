@@ -95,6 +95,57 @@ export default function HomeschoolTracker() {
   const total_done = SUBJECTS.reduce((acc, s) =>
     acc + DAYS.filter(d => week[s.id]?.[d]).length, 0);
   const total_possible = SUBJECTS.length * DAYS.length;
+
+  //--- BACKUP ---
+  const export_data = () => {
+    const backup_data = {
+      current_week,
+      weeks,
+      completed_og_steps,
+      notes
+    };
+
+    const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(backup_data, null, 2))}`;
+
+    const download_anchor = document.createElement('a');
+    download_anchor.setAttribute("href", jsonString);
+    download_anchor.setAttribute("download", `homeschool_tracker_backup_${new Date().toISOString()}.json`);
+    document.body.appendChild(download_anchor);
+    download_anchor.click();
+    document.body.removeChild(download_anchor);
+  };
+
+  const import_data = (event) => {
+    const file_reader = new file_reader();
+    const uploaded_file = event.target.files[0];
+
+    if (!uploaded_file) return;
+
+    file_reader.onload = (e) => {
+      try {
+        const parsed_data  = JSON.parse(e.target.result);
+
+        if (parsed_data.weeks || parsed_data.completed_og_steps || parsed_data.notes) {
+          if (window.confirm("importing data will overwrite your current progress. are you sure?")) {
+            if (parsed_data.current_week) set_current_week(parsed_data.current_week);
+            if (parsed_data.weeks) set_weeks(parsed_data.weeks);
+            if (parsed_data.completed_og_steps) set_completed_og_steps(parsed_data.completed_og_steps);
+            if (parsed_data.notes) set_notes(parsed_data.notes);
+          
+            alert("backup imported successfully! your dashboard is now up to date :)");
+          }
+        } else {
+          alert("the selected file does not appear to be a valid backup. please select a different file and try again.");
+        }
+      } catch {
+        alert("there was an error importing the backup. please make sure you are selecting a valid backup file and try again.");
+      }
+    };
+
+      file_reader.readAsTest(uploaded_file);
+    };
+
+  
   
 
   return (
@@ -140,6 +191,22 @@ export default function HomeschoolTracker() {
 
             <ProgressBar value={total_done} max={total_possible} color="#4CAF50" />
             <div style={{ height: 16}} />
+
+            <div className="backup-controls-row">
+              <button className="backup-action-button export-button" onClick={export_data}>
+                export backup file
+              </button>
+
+              <label className="backup-action-button import-button">
+                import backup file
+                <input
+                  type="file"
+                  accept=".json"
+                  onChange={import_data}
+                  style={{ display: 'none' }}
+                />
+              </label>
+            </div>
 
             <button
               className={`reset-week-button ${is_reset_hovered ? 'hover' : ''}`}

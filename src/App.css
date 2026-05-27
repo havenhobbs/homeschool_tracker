@@ -327,4 +327,72 @@
     align-items: center;
   }
 
-  
+  .subject-card-title {
+    font-size: 20px;
+    color: #444;
+  }
+
+  .subject-card-counter {
+    font-size: 16px;
+    color: #444;
+  }
+
+  .subject-card-days-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    width: 100%;
+  }
+
+  .subject-day-button {
+    flex: 1;
+    padding: 10px 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Lexend', monospace;
+    font-size: 16px;
+    transition: all 0.15s ease;
+  }
+
+  .backup-controls-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .backup-action-button {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .backup-action-button.export-button {
+    background: #ffffff;
+    color: #ffa8d5;
+    border: 2px solid #ffa8d5;
+  }
+
+  .backup-action-button.export-button:hover {
+    background: #ffa8d5;
+    color: #ffffff;
+
+  }
+
+  .backup-action-button.import-button {
+    background: #ffffff;
+    color: #a8ece5;
+    border: 2px solid #a8ece5;
+    display: inline-block;
+  }
+
+  .backup-action-button.import-button:hover {
+    background: #a8ece5;
+    color: #ffffff
+  }

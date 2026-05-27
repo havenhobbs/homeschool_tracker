@@ -8,7 +8,7 @@ function ProgressMatrix ({ weeks, current_week, set_current_week , SUBJECTS, DAY
             </div>
 
             <div className="matrix-grid">
-                {Array.from({ length: 52 }).map((_, index) => {
+                {Array.from({ length: 38 }).map((_, index) => {
                     const week_num = index + 1;
                     const target_week_data = weeks[week_num] || {};
 
