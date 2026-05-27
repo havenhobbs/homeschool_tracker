@@ -4,7 +4,6 @@ import ProgressBar from "./ProgressBar";
 
 function SubjectCard( { subject, week , onToggle}) {
 
-
     const done = DAYS.filter(d => week[subject.id]?.[d]).length;
 
     return (
@@ -24,6 +23,7 @@ function SubjectCard( { subject, week , onToggle}) {
                 justifyContent: "space-between",
                 marginBottom: "8px"
             }}>
+
                 <span style={{
                     fontFamily: "Lexend, monospace",
                     fontSize: "18px",
@@ -34,32 +34,45 @@ function SubjectCard( { subject, week , onToggle}) {
 
                 <span style={{
                     fontSize: "14px",
-                    color: "#666"
+                    color: "#661"
                 }}>
                     {done} / 5 days
                 </span>
             </div>
 
             <ProgressBar value={done} max={5} color={subject.color} />
-            <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
-                {DAYS.map(d => (
-                    <button 
-                    key={d}
-                    onClick={() => onToggle(subject.id, d)}
-                    style={{
-                        flex: 1,
-                        padding: "8px",
-                        borderRadius: "4px",
-                        border: `1px solid ${subject.color}`,
-                        background: week[subject.id]?.[d] ? subject.color : "#fff",
-                        color: week[subject.id]?.[d] ? "#fff" : subject.color,
-                        cursor: "pointer",
-                        transition: "all 0.15s"
-                    }}
-                    >
-                        {d}
-                    </button>
-                ))}
+
+            <div style={{ 
+                display: "flex", 
+                gap: "8px", 
+                marginTop: "8px" }}>
+
+                {DAYS.map(d => {
+
+                    const isChecked = !!week[subject.id]?.[d];
+
+                    return (
+                        <button 
+                            key={d}
+                            onClick={() => onToggle(subject.id, d)}
+                            style={{
+                                flex: 1,
+                                padding: "8px",
+                                borderRadius: "4px",
+                                border: `1px solid ${subject.color}`,
+                                background: isChecked ? subject.color : "#fff",
+                                color: isChecked ? "#fff" : subject.color,
+                                cursor: "pointer",
+                                fontWeight: isChecked ? "bold" : "normal",
+                                textTransform: "uppercase",
+                                fontSize: "12px",
+                                transition: "all 0.15s"
+                            }}
+                        >
+                            {d.substring(0, 3)}
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );
