@@ -61,7 +61,7 @@ because this app relies entirely on native browser storage currently, your track
 2. transfer or drop that file directly onto your secondary workspace hardware platform
 3. select **import backup file** on the new setup's layout dashboard to seamlessly resume tracking
 
-## techinical highlights
+## technical highlights
 
 * **state management:** state variables live strictly in the root parent container (`App.jsx`) and pour context down into functional sub-components via **one-way data props**
 * **performance optimization:** component text-box fields isolate internal input strokes cleanly to localized scopes, eliminating cross-component layout rendering lags during notation routines
